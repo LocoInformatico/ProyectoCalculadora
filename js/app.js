@@ -6,7 +6,7 @@ var resultado;
 var valPunto = false;
 
 
-var Eventos = {
+var Calculadora = {
     init: function(){
         resultado = document.getElementById('display');
         document.onkeypress = this.validaNumeros;
@@ -23,134 +23,123 @@ var Eventos = {
         document.getElementById('punto').onclick    = this.punto
         document.getElementById('sign').onclick     = this.signo
         document.getElementById('por').onclick      = this.multiplica
-        document.getElementById('menos').contains   = this.resta
+        document.getElementById('menos').onclick    = this.resta
         document.getElementById('dividido').onclick = this.divide
         document.getElementById('mas').onclick      = this.suma
         document.getElementById('igual').onclick    = this.igual
         document.getElementById('raiz').onclick     = this.raiz
         document.getElementById('on').onclick       = this.borrarTodo;
+        this.asignarEventosBotones('tecla');
+/*        document.getElementsByClassName('tecla').onmouseout    = this.tamanoNormal;
+        document.getElementsByClassName('tecla').onmousedown   = this.reuduceTamaño; */
     },
 
     borrarTodo: function() {
-        resultado.textContent = "";
+        resultado.textContent = "0";
         operandoa = 0;
         operandob = 0;
         operacion = "";
-        valPunto  = true;
+        valPunto  = false;
     },
 
     uno: function(){
-        if(resultado.textContent != '0') {
-            if(resultado.textContent.length <= 7) {
-                resultado.textContent = resultado.textContent  + "1";
-            }    
-        }else {
+        if(resultado.textContent == '0') {
             limpiar()
         }
-        
+        if(resultado.textContent.length <= 7) {
+            resultado.textContent = resultado.textContent  + "1"
+            reducirTamano('1');
+        }
     },
 
     dos: function(){
-        if(resultado.textContent != '0') {
-            if(resultado.textContent.length <= 7) {
-                resultado.textContent = resultado.textContent  + "2";
-            }    
-        }else {
+        if(resultado.textContent == '0') {
             limpiar()
+        }
+        if(resultado.textContent.length <= 7) {
+            resultado.textContent = resultado.textContent  + "2";
         }
     },
 
     tres: function(){
-        if(resultado.textContent != '0') {
-            if(resultado.textContent.length <= 7) {
-                resultado.textContent = resultado.textContent  + "3";
-            }    
-        }else {
+        if(resultado.textContent == '0') {
             limpiar()
         }
-        
+        if(resultado.textContent.length <= 7) {
+            resultado.textContent = resultado.textContent  + "3";
+        }
     },
 
     cuatro: function(){
-        if(resultado.textContent != '0') {
-            if(resultado.textContent.length <= 7) {
-                resultado.textContent = resultado.textContent  + "4";
-            }
-        }else {
+        if(resultado.textContent == '0') {
             limpiar()
         }
-        
+        if(resultado.textContent.length <= 7) {
+            resultado.textContent = resultado.textContent  + "4";
+        }
     },
 
     cinco: function(){
-        if(resultado.textContent != '0') {
-            if(resultado.textContent.length <= 7) {
-                resultado.textContent = resultado.textContent  + "5";
-            }
-        }else {
+        if(resultado.textContent == '0') {
             limpiar()
         }
-        
+        if(resultado.textContent.length <= 7) {
+            resultado.textContent = resultado.textContent  + "5";
+        }
     },
 
     seis: function(){
-        if(resultado.textContent != '0') {
-            if(resultado.textContent.length <= 7) {
-                resultado.textContent = resultado.textContent  + "6";
-            }
-        }else {
+        if(resultado.textContent == '0') {
             limpiar()
+        }
+        if(resultado.textContent.length <= 7) {
+            resultado.textContent = resultado.textContent  + "6";
         }
     },
 
     siete: function(){
-        if(resultado.textContent != '0') {
-            if(resultado.textContent.length <= 7) {
-                resultado.textContent = resultado.textContent  + "7";
-            }
-        }else {
+        if(resultado.textContent == '0') {
             limpiar()
+        }
+        if(resultado.textContent.length <= 7) {
+            resultado.textContent = resultado.textContent  + "7";
         }
     },
 
     ocho: function(){
-        if(resultado.textContent != '0') {
-            if(resultado.textContent.length <= 7) {
-                resultado.textContent = resultado.textContent  + "8";
-            }
-        }else {
+        if(resultado.textContent == '0') {
             limpiar()
+        }
+        if(resultado.textContent.length <= 7) {
+            resultado.textContent = resultado.textContent  + "8";
         }
     },
 
     nueve: function() {
-        if(resultado.textContent != '0'){
-            if(resultado.textContent.length <= 7) {
-                resultado.textContent = resultado.textContent + "9";
-            }
-        }else {
+        if(resultado.textContent == '0') {
             limpiar()
+        }
+        if(resultado.textContent.length <= 7) {
+            resultado.textContent = resultado.textContent  + "9";
         }
     },
 
     cero: function(){
-        if(resultado.textContent != '0'){
-            if(resultado.textContent.length <= 7) {
-                resultado.textContent = resultado.textContent + '0'
-            }
-        }else {
+        if(resultado.textContent == '0') {
             limpiar()
+        }
+        if(resultado.textContent.length <= 7) {
+            resultado.textContent = resultado.textContent  + "0";
         }
     },
 
     punto: function(){
-        if(resultado.textContent != '0'){
-            if(resultado.textContent.length <= 7 && !valPunto ) {
-                resultado.textContent = resultado.textContent + '.'
-                valPunto = true;
-            }
-        }else {
+        if(resultado.textContent == '0'){
             limpiar()
+        }
+        if(resultado.textContent.length <= 7 && !valPunto ) {
+            resultado.textContent = resultado.textContent + '.'
+            valPunto = true;
         }
     },
 
@@ -163,41 +152,57 @@ var Eventos = {
     multiplica: function(){
         operandoa = resultado.textContent
         operacion = '*'
+        valPunto = false
         limpiar();
     },
 
     resta: function() {
-        operadora = resultado.textContent
+        operandoa = resultado.textContent
         operacion = '-'
+        valPunto = false
         limpiar()
     },
 
     divide: function(){
-        operadora = resultado.textContent
+        operandoa = resultado.textContent
         operacion = '/'
+        valPunto = false
         limpiar()
     },
 
     suma: function(){
-        operadora = resultado.textContent
+        operandoa = resultado.textContent
         operacion = '+'
+        valPunto = false
         limpiar()
     },
 
     raiz: function() {
         operandoa = resultado.textContent
         operacion = '^'
+        valPunto = false
         respuesta();
     },
 
     igual: function() {
         operandob = resultado.textContent
         respuesta();
+    },
+
+    asignarEventosBotones: function(selector) {
+        var tecla = document.getElementsByClassName(selector);
+        for (var i = 0; i < tecla.length; i++) {
+            tecla[i].onmouseup = this.tamanoNormal;
+        }
+    },
+
+    tamanoNormal: function(element) {
+        element.target.style.transform = 'scale(1)'
     }
 
 }
 
-Eventos.init()
+Calculadora.init()
 
 function limpiar(){
     resultado.textContent = "";
@@ -219,8 +224,13 @@ function respuesta(){
             res = parseFloat(operandoa) / parseFloat(operandob);
             break;
         case '^':
-            res = Math.sqrt(parseFloat(operadora))
+            res = Math.sqrt(parseFloat(operandoa))
             break;
     }
     resultado.textContent = res;
-  }
+}
+
+function reducirTamano(element) {
+    tecla = document.getElementById(element)
+    tecla.style.transform = 'scale(0.85)'
+}
