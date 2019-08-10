@@ -29,12 +29,11 @@ var Calculadora = {
         document.getElementById('igual').onclick    = this.igual
         document.getElementById('raiz').onclick     = this.raiz
         document.getElementById('on').onclick       = this.borrarTodo;
-        this.asignarEventosBotones('tecla');
-/*        document.getElementsByClassName('tecla').onmouseout    = this.tamanoNormal;
-        document.getElementsByClassName('tecla').onmousedown   = this.reuduceTamaño; */
+        this.asignarEventosTeclas('tecla');
     },
 
     borrarTodo: function() {
+        tamanoNormal('on')
         resultado.textContent = "0";
         operandoa = 0;
         operandob = 0;
@@ -48,7 +47,7 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "1"
-            reducirTamano('1');
+            tamanoNormal('1');
         }
     },
 
@@ -58,6 +57,7 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "2";
+            tamanoNormal('2')
         }
     },
 
@@ -67,6 +67,7 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "3";
+            tamanoNormal('3')
         }
     },
 
@@ -76,6 +77,7 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "4";
+            tamanoNormal('4')
         }
     },
 
@@ -85,6 +87,7 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "5";
+            tamanoNormal('5')
         }
     },
 
@@ -94,6 +97,7 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "6";
+            tamanoNormal('6')
         }
     },
 
@@ -103,6 +107,7 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "7";
+            tamanoNormal('7')
         }
     },
 
@@ -112,6 +117,7 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "8";
+            tamanoNormal('8')
         }
     },
 
@@ -121,6 +127,7 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "9";
+            tamanoNormal('9')
         }
     },
 
@@ -130,6 +137,7 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "0";
+            tamanoNormal('0')
         }
     },
 
@@ -140,6 +148,7 @@ var Calculadora = {
         if(resultado.textContent.length <= 7 && !valPunto ) {
             resultado.textContent = resultado.textContent + '.'
             valPunto = true;
+            tamanoNormal('punto')
         }
     },
 
@@ -147,9 +156,11 @@ var Calculadora = {
         resul = resultado.textContent
         result = parseFloat(resul) * -1
         resultado.textContent = result
+        tamanoNormal('sign')
     },
 
     multiplica: function(){
+        tamanoNormal('por')
         operandoa = resultado.textContent
         operacion = '*'
         valPunto = false
@@ -157,6 +168,7 @@ var Calculadora = {
     },
 
     resta: function() {
+        tamanoNormal('menos')
         operandoa = resultado.textContent
         operacion = '-'
         valPunto = false
@@ -164,6 +176,7 @@ var Calculadora = {
     },
 
     divide: function(){
+        tamanoNormal('dividido')
         operandoa = resultado.textContent
         operacion = '/'
         valPunto = false
@@ -171,6 +184,7 @@ var Calculadora = {
     },
 
     suma: function(){
+        tamanoNormal('mas')
         operandoa = resultado.textContent
         operacion = '+'
         valPunto = false
@@ -178,6 +192,7 @@ var Calculadora = {
     },
 
     raiz: function() {
+        tamanoNormal('raiz')
         operandoa = resultado.textContent
         operacion = '^'
         valPunto = false
@@ -185,19 +200,20 @@ var Calculadora = {
     },
 
     igual: function() {
+        tamanoNormal('igual')
         operandob = resultado.textContent
         respuesta();
     },
 
-    asignarEventosBotones: function(selector) {
+    asignarEventosTeclas: function(selector) {
         var tecla = document.getElementsByClassName(selector);
         for (var i = 0; i < tecla.length; i++) {
-            tecla[i].onmouseup = this.tamanoNormal;
+            tecla[i].onmouseup = this.cambiaTamanoReducido;
         }
     },
 
-    tamanoNormal: function(element) {
-        element.target.style.transform = 'scale(1)'
+    cambiaTamanoReducido: function(event) {
+        reducirTamano(event.target)
     }
 
 }
@@ -230,7 +246,12 @@ function respuesta(){
     resultado.textContent = res;
 }
 
-function reducirTamano(element) {
-    tecla = document.getElementById(element)
-    tecla.style.transform = 'scale(0.85)'
+function reducirTamano(e) {
+    e.style.transform = 'scale(0.85)'
+}
+
+function tamanoNormal(e) {
+    tecla = document.getElementById(e)
+//    tecla.style.transition = 'transform 1s'
+    tecla.style.transform = 'scale(1)'
 }

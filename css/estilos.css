@@ -43,6 +43,7 @@ body{
 .teclado img{
   width: 22%;
   height: 62.91px;
+  transition: transform 5s;
 }
 @font-face {
   font-family: digital;
