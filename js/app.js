@@ -29,7 +29,8 @@ var Calculadora = {
         document.getElementById('igual').onclick    = this.igual
         document.getElementById('raiz').onclick     = this.raiz
         document.getElementById('on').onclick       = this.borrarTodo;
-        this.asignarEventosTeclas('tecla');
+        this.asignarEventoMousedown('tecla');
+        this.asignarEventoMouseup('tecla');
     },
 
     borrarTodo: function() {
@@ -47,8 +48,8 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "1"
-            tamanoNormal('1');
         }
+//        tamanoNormal('1');
     },
 
     dos: function(){
@@ -57,8 +58,8 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "2";
-            tamanoNormal('2')
         }
+//        tamanoNormal('2')
     },
 
     tres: function(){
@@ -67,8 +68,8 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "3";
-            tamanoNormal('3')
         }
+//        tamanoNormal('3')
     },
 
     cuatro: function(){
@@ -77,8 +78,8 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "4";
-            tamanoNormal('4')
         }
+//        tamanoNormal('4')
     },
 
     cinco: function(){
@@ -87,8 +88,8 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "5";
-            tamanoNormal('5')
         }
+//        tamanoNormal('5')
     },
 
     seis: function(){
@@ -97,8 +98,8 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "6";
-            tamanoNormal('6')
         }
+//        tamanoNormal('6')
     },
 
     siete: function(){
@@ -107,8 +108,8 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "7";
-            tamanoNormal('7')
         }
+//        tamanoNormal('7')
     },
 
     ocho: function(){
@@ -117,8 +118,8 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "8";
-            tamanoNormal('8')
         }
+//        tamanoNormal('8')
     },
 
     nueve: function() {
@@ -127,8 +128,8 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "9";
-            tamanoNormal('9')
         }
+//        tamanoNormal('9')
     },
 
     cero: function(){
@@ -137,8 +138,8 @@ var Calculadora = {
         }
         if(resultado.textContent.length <= 7) {
             resultado.textContent = resultado.textContent  + "0";
-            tamanoNormal('0')
         }
+//        tamanoNormal('0')
     },
 
     punto: function(){
@@ -148,19 +149,19 @@ var Calculadora = {
         if(resultado.textContent.length <= 7 && !valPunto ) {
             resultado.textContent = resultado.textContent + '.'
             valPunto = true;
-            tamanoNormal('punto')
         }
+//        tamanoNormal('punto')
     },
 
     signo: function() {
         resul = resultado.textContent
         result = parseFloat(resul) * -1
         resultado.textContent = result
-        tamanoNormal('sign')
+//        tamanoNormal('sign')
     },
 
     multiplica: function(){
-        tamanoNormal('por')
+//        tamanoNormal('por')
         operandoa = resultado.textContent
         operacion = '*'
         valPunto = false
@@ -168,7 +169,7 @@ var Calculadora = {
     },
 
     resta: function() {
-        tamanoNormal('menos')
+//        tamanoNormal('menos')
         operandoa = resultado.textContent
         operacion = '-'
         valPunto = false
@@ -176,7 +177,7 @@ var Calculadora = {
     },
 
     divide: function(){
-        tamanoNormal('dividido')
+//        tamanoNormal('dividido')
         operandoa = resultado.textContent
         operacion = '/'
         valPunto = false
@@ -184,7 +185,7 @@ var Calculadora = {
     },
 
     suma: function(){
-        tamanoNormal('mas')
+//        tamanoNormal('mas')
         operandoa = resultado.textContent
         operacion = '+'
         valPunto = false
@@ -192,7 +193,7 @@ var Calculadora = {
     },
 
     raiz: function() {
-        tamanoNormal('raiz')
+//        tamanoNormal('raiz')
         operandoa = resultado.textContent
         operacion = '^'
         valPunto = false
@@ -200,22 +201,32 @@ var Calculadora = {
     },
 
     igual: function() {
-        tamanoNormal('igual')
+//        tamanoNormal('igual')
         operandob = resultado.textContent
         respuesta();
     },
 
-    asignarEventosTeclas: function(selector) {
+    asignarEventoMousedown: function(selector) {
         var tecla = document.getElementsByClassName(selector);
         for (var i = 0; i < tecla.length; i++) {
-            tecla[i].onmouseup = this.cambiaTamanoReducido;
+            tecla[i].onmousedown = this.cambiaTamanoReducido;
+        }
+    },
+
+    asignarEventoMouseup: function(selector) {
+        var tecla = document.getElementsByClassName(selector);
+        for (var i = 0; i < tecla.length; i++) {
+            tecla[i].onmouseup = this.cambiaTamanoNormal;
         }
     },
 
     cambiaTamanoReducido: function(event) {
         reducirTamano(event.target)
-    }
+    },
 
+    cambiaTamanoNormal: function(event) {
+        tamanoNormal(event.target)
+    }
 }
 
 Calculadora.init()
@@ -228,22 +239,22 @@ function respuesta(){
     var res = 0;
     switch(operacion){
         case "+":
-            res = parseFloat(operandoa) + parseFloat(operandob);
+            res = parseFloat(operandoa) + parseFloat(operandob)
             break;
         case "-":
-            res = parseFloat(operandoa) - parseFloat(operandob);
+            res = parseFloat(operandoa) - parseFloat(operandob)
             break;
         case "*":
-            res = parseFloat(operandoa) * parseFloat(operandob);
+            res = parseFloat(operandoa) * parseFloat(operandob)
             break;
         case "/":
-            res = parseFloat(operandoa) / parseFloat(operandob);
+            res = parseFloat(operandoa) / parseFloat(operandob)
             break;
         case '^':
             res = Math.sqrt(parseFloat(operandoa))
             break;
     }
-    resultado.textContent = res;
+    resultado.textContent = Math.trunc(res,8);
 }
 
 function reducirTamano(e) {
@@ -251,7 +262,4 @@ function reducirTamano(e) {
 }
 
 function tamanoNormal(e) {
-    tecla = document.getElementById(e)
-//    tecla.style.transition = 'transform 1s'
-    tecla.style.transform = 'scale(1)'
-}
+    e.style.transform = 'scale(1)'}
